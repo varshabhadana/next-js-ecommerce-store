@@ -1,14 +1,9 @@
 import Head from 'next/head';
 import Image from 'next/image';
+import { planters } from '../../database/planters';
 
-const planters = [
-  { id: 1, name: 'Purrfect planter', material: 'Ceramic' },
-  { id: 2, name: 'Praha Planter', material: 'Ceramic' },
-  { id: 3, name: 'Amber Planter', material: 'Ceramic' },
-  { id: 4, name: 'Emerald Planter', material: 'Ceramic' },
-];
-
-export default function Planters() {
+export default function Planters(props) {
+  console.log(props);
   return (
     <>
       <Head>
@@ -17,7 +12,7 @@ export default function Planters() {
       </Head>
       <h1>Plant Pots</h1>
 
-      {planters.map((el) => {
+      {props.planters.map((el) => {
         return (
           <div key={el.id}>
             <h2>{el.name}</h2>
@@ -36,4 +31,11 @@ export default function Planters() {
       })}
     </>
   );
+}
+export function getServerSideProps() {
+  return {
+    props: {
+      planters: planters,
+    },
+  };
 }
