@@ -9,7 +9,6 @@ export default function Cart() {
           name="description"
           content="Shows information of a item in your cart "
         />
-        <link rel="icon" href="/favicon.ico" />
       </Head>
       <p> Cart Page kchkdhfkdhfkhdfkjd </p>
     </>

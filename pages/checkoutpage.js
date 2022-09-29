@@ -9,7 +9,6 @@ export default function Checkout() {
           name="description"
           content="Allows you to confirm order by entering shipping and payment information "
         />
-        <link rel="icon" href="/favicon.ico" />
       </Head>
       Checkout Page
     </>

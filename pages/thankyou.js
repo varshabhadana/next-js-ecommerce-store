@@ -6,7 +6,6 @@ export default function Thankyou() {
       <Head>
         <title>Thank You Page</title>
         <meta name="description" content="Thank you for shopping " />
-        <link rel="icon" href="/favicon.ico" />
       </Head>
       Thank you Page
     </>

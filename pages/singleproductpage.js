@@ -9,7 +9,6 @@ export default function Productpage() {
           name="description"
           content="Shows information of a particular product "
         />
-        <link rel="icon" href="/favicon.ico" />
       </Head>
       Single Product Page
     </>

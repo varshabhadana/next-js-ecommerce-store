@@ -5,8 +5,7 @@ export default function Home() {
     <>
       <Head>
         <title>Home Page</title>
-        <meta name="description" content="Shows all the listed products " />
-        <link rel="icon" href="/favicon.ico" />
+        <meta name="description" content="Introduction to the website " />
       </Head>
 
       <main>Home Page</main>
