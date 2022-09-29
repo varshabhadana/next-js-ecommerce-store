@@ -22,6 +22,15 @@ export default function Plannter(props) {
   }
   return (
     <div>
+      <Head>
+        <title>
+          {props.planter.name}, the {props.planter.material}
+        </title>
+        <meta
+          name="description"
+          content={`${props.planter.name} is a ${props.planter.material} `}
+        />
+      </Head>
       <h2>{props.planter.name}</h2>
       <Image
         src={`/${props.planter.id}-${props.planter.name.toLowerCase()}.jpeg`}

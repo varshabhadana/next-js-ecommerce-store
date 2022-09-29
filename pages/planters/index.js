@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import Image from 'next/image';
+import Link from 'next/link';
 import { planters } from '../../database/planters';
 
 export default function Planters(props) {
@@ -15,13 +16,21 @@ export default function Planters(props) {
       {props.planters.map((el) => {
         return (
           <div key={el.id}>
-            <h2>{el.name}</h2>
-            <Image
-              src={`/${el.id}-${el.name.toLowerCase()}.jpeg`}
-              alt=""
-              width="400"
-              height="400"
-            />
+            <Link href={`/planters/${el.id}`}>
+              <a>
+                <h2>{el.name}</h2>
+              </a>
+            </Link>
+            <Link href={`/planters/${el.id}`}>
+              <a>
+                <Image
+                  src={`/${el.id}-${el.name.toLowerCase()}.jpeg`}
+                  alt=""
+                  width="400"
+                  height="400"
+                />
+              </a>
+            </Link>
             <div>Material:{el.material}</div>
             <div>
               Image Name: {el.id}-{el.name.toLowerCase()}.jpeg
