@@ -16,12 +16,12 @@ export default function Planters(props) {
       {props.planters.map((el) => {
         return (
           <div key={el.id}>
-            <Link href={`/planters/${el.id}`}>
+            <Link data-test-id={`product-${el.id}`} href={`/planters/${el.id}`}>
               <a>
                 <h2>{el.name}</h2>
               </a>
             </Link>
-            <Link href={`/planters/${el.id}`}>
+            <Link data-test-id={`product-${el.id}`} href={`/planters/${el.id}`}>
               <a>
                 <Image
                   src={`/${el.id}-${el.name.toLowerCase()}.jpeg`}
@@ -35,6 +35,7 @@ export default function Planters(props) {
             <div>
               Image Name: {el.id}-{el.name.toLowerCase()}.jpeg
             </div>
+            <div data-test-id="product-price">Price:{el.price}</div>
           </div>
         );
       })}

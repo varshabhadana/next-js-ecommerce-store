@@ -31,7 +31,7 @@ export default function Plannter(props) {
           content={`${props.planter.name} is a ${props.planter.material} `}
         />
       </Head>
-      <h2>{props.planter.name}</h2>
+      <h1>{props.planter.name}</h1>
       <Image
         src={`/${props.planter.id}-${props.planter.name.toLowerCase()}.jpeg`}
         alt=""
@@ -42,6 +42,7 @@ export default function Plannter(props) {
       <div>
         Image Name: {props.planter.id}-{props.planter.name.toLowerCase()}.jpeg
       </div>
+      <button data-test-id="product-add-to-cart">Add to cart</button>
     </div>
   );
 }

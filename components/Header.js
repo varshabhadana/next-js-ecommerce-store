@@ -4,7 +4,9 @@ export default function Header() {
   return (
     <header>
       <div>
-        <Link href="/">Product Page</Link>
+        <Link data-test-id="products-link" href="/planters">
+          Product Page
+        </Link>
       </div>
     </header>
   );
