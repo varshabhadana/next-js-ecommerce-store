@@ -19,7 +19,6 @@ export function CookieBanner() {
   return (
     <div css={bannerStyles(isBannerOpen)}>
       <span>Please accept our cookie ploicy</span>{' '}
-      {JSON.stringify(isBannerOpen)}
       <button
         onClick={() => {
           setIsBannerOpen(false);
