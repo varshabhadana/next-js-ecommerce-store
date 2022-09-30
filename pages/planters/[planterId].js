@@ -1,7 +1,33 @@
+import { css } from '@emotion/react';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import { planters } from '../../database/planters';
+
+const producContainerStyles = css`
+  display: flex;
+  padding: 20px;
+  margin: 50px 100px;
+  border: 1px solid #77bfa3;
+  border-radius: 8px;
+`;
+const productContentStyles = css`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 30px;
+`;
+const buttonStyles = css`
+  padding: 10px;
+  background-color: white;
+  color: black;
+  border: 2px solid #e7e7e7;
+  font-size: 16px;
+  margin-top: 30px;
+  &:hover {
+    background-color: #bfd8bd;
+  }
+`;
 
 export default function Plannter(props) {
   if (props.error) {
@@ -31,18 +57,28 @@ export default function Plannter(props) {
           content={`${props.planter.name} is a ${props.planter.material} `}
         />
       </Head>
-      <h1>{props.planter.name}</h1>
-      <Image
-        src={`/${props.planter.id}-${props.planter.name.toLowerCase()}.jpeg`}
-        alt=""
-        width="400"
-        height="400"
-      />
-      <div>Material:{props.planter.material}</div>
-      <div>
-        Image Name: {props.planter.id}-{props.planter.name.toLowerCase()}.jpeg
+      <div css={producContainerStyles}>
+        <Image
+          src={`/${props.planter.id}-${props.planter.name.toLowerCase()}.jpeg`}
+          alt=""
+          width="700"
+          height="700"
+        />
+        <div css={productContentStyles}>
+          <h1>{props.planter.name}</h1>
+          <div>Material:{props.planter.material}</div>
+          <div>
+            -Indoor use only
+            <br />
+            -Drainage hole included
+            <br />
+            -Wipe clean with dry cloth
+          </div>
+          <button css={buttonStyles} data-test-id="product-add-to-cart">
+            Add to cart
+          </button>
+        </div>
       </div>
-      <button data-test-id="product-add-to-cart">Add to cart</button>
     </div>
   );
 }

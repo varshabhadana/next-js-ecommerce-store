@@ -20,7 +20,7 @@ const productStyles = css`
   justify-content: center;
   flex-direction: column;
   padding: 24px;
-  box-shadow: 0 4px 8px 0 gray;
+  box-shadow: 0 1px 3px 0 gray;
   transition: 0.3s;
 
   &:hover {
