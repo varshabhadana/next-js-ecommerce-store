@@ -77,6 +77,10 @@ export default function Plannter(props) {
           </div>
           <label htmlFor="Quantity">Quantity</label>
 
+          {(props.cookies.length > 0 &&
+            props.cookies.find((el) => el.id === props.planter.id)?.count) ||
+            0}
+
           <button
             onClick={() => {
               const currentCookieValue = getParsedCookie('Count');
@@ -143,6 +147,9 @@ export function getServerSideProps(context) {
   const planterId = parseInt(context.query.planterId);
   // Finding the platner
   const foundPlanter = planters.find((el) => el.id === planterId);
+  const parsedCookies = context.req.cookies.Count
+    ? JSON.parse(context.req.cookies.Count)
+    : [];
 
   if (typeof foundPlanter === 'undefined') {
     context.res.statusCode = 404;
@@ -155,6 +162,7 @@ export function getServerSideProps(context) {
   return {
     props: {
       planter: foundPlanter,
+      cookies: parsedCookies,
     },
   };
 }
