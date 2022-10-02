@@ -1,5 +1,6 @@
 import { css } from '@emotion/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { getLocalStorage, setLocalStorage } from '../utils/localStorage';
 
 const bannerStyles = (isOpen) => css`
   padding: 5px;
@@ -16,12 +17,22 @@ const bannerStyles = (isOpen) => css`
 
 export function CookieBanner() {
   const [isBannerOpen, setIsBannerOpen] = useState(true);
+  // To render cookie banner
+  useEffect(() => {
+    const initialValue = getLocalStorage('isBannerOpen');
+
+    if (initialValue !== null) {
+      setIsBannerOpen(initialValue);
+    }
+  }, []);
+
   return (
     <div css={bannerStyles(isBannerOpen)}>
-      <span>Please accept our cookie ploicy</span>{' '}
+      <span>Please accept our cookie ploicy</span>
       <button
         onClick={() => {
           setIsBannerOpen(false);
+          setLocalStorage('isBannerOpen', false);
         }}
       >
         Yes

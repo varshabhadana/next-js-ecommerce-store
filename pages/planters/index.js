@@ -20,7 +20,7 @@ const productStyles = css`
   justify-content: center;
   flex-direction: column;
   padding: 24px;
-  box-shadow: 0 1px 3px 0 gray;
+  box-shadow: 0 0px 0px 0 gray;
   transition: 0.3s;
 
   &:hover {
@@ -101,6 +101,12 @@ export default function Planters(props) {
   );
 }
 export function getServerSideProps() {
+  const plantersWithCount = planters.map((el) => {
+    return {
+      ...el,
+    };
+  });
+
   return {
     props: {
       planters: planters,

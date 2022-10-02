@@ -3,6 +3,7 @@ import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import { planters } from '../../database/planters';
+import { getParsedCookie, setStringifiedCookie } from '../../utils/cookie';
 
 const producContainerStyles = css`
   display: flex;
@@ -74,6 +75,60 @@ export default function Plannter(props) {
             <br />
             -Wipe clean with dry cloth
           </div>
+          <label htmlFor="Quantity">Quantity</label>
+
+          <button
+            onClick={() => {
+              const currentCookieValue = getParsedCookie('Count');
+
+              if (!currentCookieValue) {
+                setStringifiedCookie('Count', [
+                  { id: props.planter.id, count: 1 },
+                ]);
+                return;
+              } else {
+                /* If cookie is defined */
+
+                const foundCookie = currentCookieValue.find(
+                  (el) => el.id === props.planter.id,
+                );
+
+                if (!foundCookie) {
+                  currentCookieValue.push({ id: props.planter.id, count: 1 });
+                } else {
+                  foundCookie.count++;
+                }
+                setStringifiedCookie('Count', currentCookieValue);
+              }
+            }}
+          >
+            +
+          </button>
+
+          <button
+            onClick={() => {
+              const currentCookieValue = getParsedCookie('Count');
+              if (!currentCookieValue) {
+                setStringifiedCookie('Count', [
+                  { id: props.planter.id, count: 0 },
+                ]);
+              } else {
+                const foundCookie = currentCookieValue.find(
+                  (el) => el.id === props.planter.id,
+                );
+                if (!foundCookie) {
+                  currentCookieValue.push({ id: props.planter.id, count: 0 });
+                } else {
+                  if (foundCookie.count > 0) {
+                    foundCookie.count--;
+                  }
+                }
+                setStringifiedCookie('Count', currentCookieValue);
+              }
+            }}
+          >
+            -
+          </button>
           <button css={buttonStyles} data-test-id="product-add-to-cart">
             Add to cart
           </button>
@@ -84,7 +139,7 @@ export default function Plannter(props) {
 }
 
 export function getServerSideProps(context) {
-  // Retrieve the animal ID from the URL
+  // Retrieve the planter ID or single product from the URL
   const planterId = parseInt(context.query.planterId);
   // Finding the platner
   const foundPlanter = planters.find((el) => el.id === planterId);
