@@ -2,7 +2,7 @@ import { css } from '@emotion/react';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
-import { planters } from '../../database/planters';
+import { getPlanter } from '../../database/connect';
 
 const productContainerStyles = css`
   display: flex;
@@ -44,6 +44,7 @@ const buttonStyles = css`
   color: black;
   border: 2px solid #e7e7e7;
   font-size: 16px;
+  width: 100%;
   &:hover {
     background-color: #bfd8bd;
   }
@@ -69,7 +70,7 @@ export default function Planters(props) {
               >
                 <a>
                   <Image
-                    src={`/${el.id}-${el.name.toLowerCase()}.jpeg`}
+                    src={`/${el.id}-${el.firstName.toLowerCase()}.jpeg`}
                     alt=""
                     width="300"
                     height="300"
@@ -82,7 +83,7 @@ export default function Planters(props) {
                 href={`/planters/${el.id}`}
               >
                 <a>
-                  <h2>{el.name}</h2>
+                  <h2>{el.firstName}</h2>
                 </a>
               </Link>
               {/* Mapping over array to get product description */}
@@ -92,7 +93,11 @@ export default function Planters(props) {
               <div css={contentStyles} data-test-id="product-price">
                 Price : {el.price}
               </div>
-              <button css={buttonStyles}>View Product</button>
+              <Link href={`/planters/${el.id}`}>
+                <a>
+                  <button css={buttonStyles}>View Product</button>
+                </a>
+              </Link>
             </div>
           );
         })}
@@ -100,16 +105,12 @@ export default function Planters(props) {
     </>
   );
 }
-export function getServerSideProps() {
-  const plantersWithCount = planters.map((el) => {
-    return {
-      ...el,
-    };
-  });
-
+export async function getServerSideProps() {
+  // getting data from the database
+  const databasePlanters = await getPlanter();
   return {
     props: {
-      planters: planters,
+      planters: databasePlanters,
     },
   };
 }

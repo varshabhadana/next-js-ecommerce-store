@@ -34,7 +34,7 @@ export default function Header() {
           </Link>
         </div>
         <div>
-          <Link href="/checkoutpage">Cart</Link>
+          <Link href="/checkoutpage">Cart </Link>
         </div>
       </nav>
     </header>

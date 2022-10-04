@@ -2,7 +2,8 @@ import { css } from '@emotion/react';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
-import { planters } from '../../database/planters';
+import { useState } from 'react';
+import { getPlanterById } from '../../database/connect';
 import { getParsedCookie, setStringifiedCookie } from '../../utils/cookie';
 
 const producContainerStyles = css`
@@ -31,6 +32,8 @@ const buttonStyles = css`
 `;
 
 export default function Plannter(props) {
+  // Setting initial state of quantity as the initial quantity coming from the cookies of a particular product
+  const [quantity, setQuantity] = useState(props.initialQuantity);
   if (props.error) {
     return (
       <div>
@@ -51,22 +54,24 @@ export default function Plannter(props) {
     <div>
       <Head>
         <title>
-          {props.planter.name}, the {props.planter.material}
+          {props.planter.firstName}, the {props.planter.material}
         </title>
         <meta
           name="description"
-          content={`${props.planter.name} is a ${props.planter.material} `}
+          content={`${props.planter.firstName} is a ${props.planter.material} `}
         />
       </Head>
       <div css={producContainerStyles}>
         <Image
-          src={`/${props.planter.id}-${props.planter.name.toLowerCase()}.jpeg`}
+          src={`/${
+            props.planter.id
+          }-${props.planter.firstName.toLowerCase()}.jpeg`}
           alt=""
           width="700"
           height="700"
         />
         <div css={productContentStyles}>
-          <h1>{props.planter.name}</h1>
+          <h1>{props.planter.firstName}</h1>
           <div>Material:{props.planter.material}</div>
           <div>
             -Indoor use only
@@ -75,15 +80,17 @@ export default function Plannter(props) {
             <br />
             -Wipe clean with dry cloth
           </div>
-          <label htmlFor="Quantity">Quantity</label>
 
-          {(props.cookies.length > 0 &&
-            props.cookies.find((el) => el.id === props.planter.id)?.count) ||
-            0}
+          {/* Quantity value */}
+          <label htmlFor="Quantity">Quantity</label>
+          {quantity}
 
           <button
             onClick={() => {
               const currentCookieValue = getParsedCookie('Count');
+
+              /* Changing the state of quantity  */
+              setQuantity(quantity + 1);
 
               if (!currentCookieValue) {
                 setStringifiedCookie('Count', [
@@ -96,6 +103,7 @@ export default function Plannter(props) {
                 const foundCookie = currentCookieValue.find(
                   (el) => el.id === props.planter.id,
                 );
+                /* If cookie is not defined then have set it and push it in the array*/
 
                 if (!foundCookie) {
                   currentCookieValue.push({ id: props.planter.id, count: 1 });
@@ -112,6 +120,10 @@ export default function Plannter(props) {
           <button
             onClick={() => {
               const currentCookieValue = getParsedCookie('Count');
+
+              /* Changing the state of quantity  */
+              setQuantity(quantity - 1);
+
               if (!currentCookieValue) {
                 setStringifiedCookie('Count', [
                   { id: props.planter.id, count: 0 },
@@ -142,14 +154,19 @@ export default function Plannter(props) {
   );
 }
 
-export function getServerSideProps(context) {
+export async function getServerSideProps(context) {
   // Retrieve the planter ID or single product from the URL
   const planterId = parseInt(context.query.planterId);
+  const foundPlanter = await getPlanterById(planterId);
   // Finding the platner
-  const foundPlanter = planters.find((el) => el.id === planterId);
+  /* const foundPlanter = planters.find((el) => el.id === planterId); */
+
   const parsedCookies = context.req.cookies.Count
     ? JSON.parse(context.req.cookies.Count)
     : [];
+
+  const initialQuantity =
+    parsedCookies.find((el) => el.id === planterId)?.count || 0;
 
   if (typeof foundPlanter === 'undefined') {
     context.res.statusCode = 404;
@@ -162,7 +179,7 @@ export function getServerSideProps(context) {
   return {
     props: {
       planter: foundPlanter,
-      cookies: parsedCookies,
+      initialQuantity: initialQuantity,
     },
   };
 }
