@@ -1,9 +1,19 @@
 import { css, Global } from '@emotion/react';
+import Cookies from 'js-cookie';
+import { useEffect, useState } from 'react';
 import { CookieBanner } from '../components/CookieBanner';
 import Layout from '../components/Layout';
 
 function MyApp({ Component, pageProps }) {
-  console.log(pageProps);
+  const [cart, setCart] = useState([]);
+
+  useEffect(() => {
+    const parsedCookies = Cookies.get('Count')
+      ? JSON.parse(Cookies.get('Count'))
+      : [];
+    setCart(parsedCookies);
+  }, []);
+
   return (
     <>
       <Global
@@ -21,8 +31,8 @@ function MyApp({ Component, pageProps }) {
         `}
       />
       <CookieBanner />
-      <Layout>
-        <Component {...pageProps} />
+      <Layout cart={cart} setCart={setCart}>
+        <Component {...pageProps} cart={cart} setCart={setCart} />
       </Layout>
     </>
   );

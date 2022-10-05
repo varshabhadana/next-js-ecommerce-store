@@ -2,7 +2,6 @@ import { css } from '@emotion/react';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
 import { getPlanterById } from '../../database/connect';
 import { getParsedCookie, setStringifiedCookie } from '../../utils/cookie';
 
@@ -33,7 +32,14 @@ const buttonStyles = css`
 
 export default function Plannter(props) {
   // Setting initial state of quantity as the initial quantity coming from the cookies of a particular product
-  const [quantity, setQuantity] = useState(props.initialQuantity);
+
+  const productQuantity =
+    props.cart.find((el) => el.id === props.planter.id)?.count || 0;
+
+  console.log('cookie', productQuantity);
+  console.log('plantid', props.cart);
+  console.log('set', props.setCart);
+  console.log('planter', props.planter);
   if (props.error) {
     return (
       <div>
@@ -83,14 +89,20 @@ export default function Plannter(props) {
 
           {/* Quantity value */}
           <label htmlFor="Quantity">Quantity</label>
-          {quantity}
+          {productQuantity}
 
           <button
             onClick={() => {
               const currentCookieValue = getParsedCookie('Count');
 
               /* Changing the state of quantity  */
-              setQuantity(quantity + 1);
+              props.setCart(
+                props.cart.map((el) =>
+                  el.id !== props.planter.id
+                    ? el
+                    : { id: el.id, count: productQuantity + 1 },
+                ),
+              );
 
               if (!currentCookieValue) {
                 setStringifiedCookie('Count', [
@@ -122,8 +134,15 @@ export default function Plannter(props) {
               const currentCookieValue = getParsedCookie('Count');
 
               /* Changing the state of quantity  */
-              setQuantity(quantity - 1);
-
+              if (productQuantity > 0) {
+                props.setCart(
+                  props.cart.map((el) =>
+                    el.id !== props.planter.id
+                      ? el
+                      : { id: el.id, count: productQuantity - 1 },
+                  ),
+                );
+              }
               if (!currentCookieValue) {
                 setStringifiedCookie('Count', [
                   { id: props.planter.id, count: 0 },
@@ -157,6 +176,7 @@ export default function Plannter(props) {
 export async function getServerSideProps(context) {
   // Retrieve the planter ID or single product from the URL
   const planterId = parseInt(context.query.planterId);
+  console.log('dd', planterId);
   const foundPlanter = await getPlanterById(planterId);
   // Finding the platner
   /* const foundPlanter = planters.find((el) => el.id === planterId); */

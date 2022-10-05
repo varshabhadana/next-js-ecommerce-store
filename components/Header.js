@@ -23,7 +23,7 @@ const navLeftStyles = css`
   }
 `;
 
-export default function Header() {
+export default function Header(props) {
   return (
     <header>
       <nav css={navStyles}>
@@ -35,6 +35,9 @@ export default function Header() {
         </div>
         <div>
           <Link href="/checkoutpage">Cart </Link>
+          <br />
+
+          <span>{props.cart.reduce((acc, el) => el.count + acc, 0)}</span>
         </div>
       </nav>
     </header>
