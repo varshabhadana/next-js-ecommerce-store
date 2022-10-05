@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import Link from 'next/link';
 
 export default function Cart() {
   return (
@@ -10,7 +11,12 @@ export default function Cart() {
           content="Shows information of a item in your cart "
         />
       </Head>
-      <p> Cart Page kchkdhfkdhfkhdfkjd </p>
+      <p> Cart Page </p>
+      <Link href="/checkoutpage">
+        <a>
+          <button>Checkout</button>
+        </a>
+      </Link>
     </>
   );
 }

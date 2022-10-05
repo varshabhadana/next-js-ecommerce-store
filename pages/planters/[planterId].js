@@ -164,9 +164,13 @@ export default function Plannter(props) {
           >
             -
           </button>
-          <button css={buttonStyles} data-test-id="product-add-to-cart">
-            Add to cart
-          </button>
+          <Link href="/cartpage">
+            <a>
+              <button css={buttonStyles} data-test-id="product-add-to-cart">
+                Add to cart
+              </button>
+            </a>
+          </Link>
         </div>
       </div>
     </div>
