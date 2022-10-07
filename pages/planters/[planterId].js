@@ -2,6 +2,7 @@ import { css } from '@emotion/react';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useState } from 'react';
 import { getPlanterById } from '../../database/connect';
 import { getParsedCookie, setStringifiedCookie } from '../../utils/cookie';
 
@@ -33,13 +34,8 @@ const buttonStyles = css`
 export default function Plannter(props) {
   // Setting initial state of quantity as the initial quantity coming from the cookies of a particular product
 
-  const productQuantity =
-    props.cart.find((el) => el.id === props.planter.id)?.count || 0;
+  const [quantity, setQuantity] = useState(props.initialQuantity);
 
-  console.log('cookie', productQuantity);
-  console.log('plantid', props.cart);
-  console.log('set', props.setCart);
-  console.log('planter', props.planter);
   if (props.error) {
     return (
       <div>
@@ -89,41 +85,11 @@ export default function Plannter(props) {
 
           {/* Quantity value */}
           <label htmlFor="Quantity">Quantity</label>
-          {productQuantity}
+          {quantity}
 
           <button
             onClick={() => {
-              const currentCookieValue = getParsedCookie('Count');
-
-              /* Changing the state of quantity  */
-              props.setCart(
-                props.cart.map((el) =>
-                  el.id !== props.planter.id
-                    ? el
-                    : { id: el.id, count: productQuantity + 1 },
-                ),
-              );
-
-              if (!currentCookieValue) {
-                setStringifiedCookie('Count', [
-                  { id: props.planter.id, count: 1 },
-                ]);
-                return;
-              } else {
-                /* If cookie is defined */
-
-                const foundCookie = currentCookieValue.find(
-                  (el) => el.id === props.planter.id,
-                );
-                /* If cookie is not defined then have set it and push it in the array*/
-
-                if (!foundCookie) {
-                  currentCookieValue.push({ id: props.planter.id, count: 1 });
-                } else {
-                  foundCookie.count++;
-                }
-                setStringifiedCookie('Count', currentCookieValue);
-              }
+              setQuantity(quantity + 1);
             }}
           >
             +
@@ -134,12 +100,12 @@ export default function Plannter(props) {
               const currentCookieValue = getParsedCookie('Count');
 
               /* Changing the state of quantity  */
-              if (productQuantity > 0) {
+              if (quantity > 0) {
                 props.setCart(
                   props.cart.map((el) =>
                     el.id !== props.planter.id
                       ? el
-                      : { id: el.id, count: productQuantity - 1 },
+                      : { id: el.id, count: quantity - 1 },
                   ),
                 );
               }
@@ -164,13 +130,53 @@ export default function Plannter(props) {
           >
             -
           </button>
-          <Link href="/cartpage">
-            <a>
-              <button css={buttonStyles} data-test-id="product-add-to-cart">
-                Add to cart
-              </button>
-            </a>
-          </Link>
+
+          <button
+            css={buttonStyles}
+            data-test-id="product-add-to-cart"
+            onClick={() => {
+              const currentCookieValue = getParsedCookie('Count');
+
+              /* Changing the state of quantity  */
+              props.setCart(
+                props.cart.map((el) =>
+                  el.id !== props.planter.id
+                    ? el
+                    : { id: el.id, count: quantity },
+                ),
+              );
+
+              if (!currentCookieValue) {
+                setStringifiedCookie('Count', [
+                  { id: props.planter.id, count: 1 },
+                ]);
+                return;
+              } else {
+                /* If cookie is defined */
+
+                const foundCookie = currentCookieValue.find(
+                  (el) => el.id === props.planter.id,
+                );
+                /* If cookie is not defined then have set it and push it in the array*/
+
+                if (!foundCookie) {
+                  currentCookieValue.push({
+                    id: props.planter.id,
+                    count: 1,
+                  });
+                  props.setCart([
+                    ...props.cart,
+                    { id: props.planter.id, count: quantity },
+                  ]);
+                } else {
+                  foundCookie.count = quantity;
+                }
+                setStringifiedCookie('Count', currentCookieValue);
+              }
+            }}
+          >
+            Add to cart
+          </button>
         </div>
       </div>
     </div>

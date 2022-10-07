@@ -34,7 +34,7 @@ export default function Header(props) {
           </Link>
         </div>
         <div>
-          <Link href="/checkoutpage">Cart </Link>
+          <Link href="/cartpage">Cart </Link>
           <br />
 
           <span>{props.cart.reduce((acc, el) => el.count + acc, 0)}</span>

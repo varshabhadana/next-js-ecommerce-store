@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import { useState } from 'react';
 
-export default function Checkout() {
+export default function Checkout(props) {
   const [contactInfo, setContactInfo] = useState({
     firstName: '',
     lastName: '',
@@ -28,6 +28,8 @@ export default function Checkout() {
         onSubmit={(event) => {
           event.preventDefault();
           window.location.href = '/thankyou';
+          setContactInfo('');
+          props.setCart([]);
         }}
       >
         <label htmlFor="firstName">First Name</label>
