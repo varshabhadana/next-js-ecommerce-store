@@ -3,6 +3,7 @@ import Cookies from 'js-cookie';
 import { useEffect, useState } from 'react';
 import { CookieBanner } from '../components/CookieBanner';
 import Layout from '../components/Layout';
+import { setStringifiedCookie } from '../utils/cookie';
 
 function MyApp({ Component, pageProps }) {
   const [cart, setCart] = useState([]);
@@ -13,6 +14,9 @@ function MyApp({ Component, pageProps }) {
       : [];
     setCart(parsedCookies);
   }, []);
+  useEffect(() => {
+    setStringifiedCookie('Count', cart);
+  }, [cart]);
 
   return (
     <>

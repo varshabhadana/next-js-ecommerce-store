@@ -3,6 +3,7 @@ import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import { getPlanter } from '../database/connect';
+import { setStringifiedCookie } from '../utils/cookie';
 
 const cartStyles = css`
   display: flex;
@@ -51,11 +52,13 @@ const checkoutButtonStyles = css`
   color: black;
   border: 2px solid #e7e7e7;
   font-size: 16px;
-  width: 500px;
+  width: 100%;
+  margin: 50px;
 `;
 
 export default function Cart(props) {
   console.log('planter', props.planters);
+
   return (
     <>
       <Head>
@@ -65,7 +68,6 @@ export default function Cart(props) {
           content="Shows information of a item in your cart "
         />
       </Head>
-
       {props.cart.map((el) => {
         const matchingItem = props.planters.find((item) => item.id === el.id);
         return (
@@ -87,20 +89,76 @@ export default function Cart(props) {
               </div>
 
               <div>
-                <button style={{ marginRight: '10px' }}>-</button>
+                <button
+                  style={{ marginRight: '10px' }}
+                  onClick={() => {
+                    if (el.count > 0) {
+                      const deleteQuantity = props.cart.map((item) =>
+                        item.id === el.id
+                          ? { ...item, count: item.count - 1 }
+                          : item,
+                      );
+                      console.log('deleteQuantity', deleteQuantity);
+                      props.setCart(deleteQuantity);
+                    }
+                    // delete item when quantity is 0
+                    if (el.count === 0) {
+                      const remainingCart = props.cart.filter((item) => {
+                        return item.id !== el.id;
+                      });
+
+                      // setting cart with the new cookie array
+                      props.setCart(remainingCart);
+                    }
+                  }}
+                >
+                  -
+                </button>
 
                 {el.count}
 
-                <button style={{ marginLeft: '10px' }}>+</button>
+                <button
+                  style={{ marginLeft: '10px' }}
+                  onClick={() => {
+                    const addQuantity = props.cart.map((item) =>
+                      item.id === el.id
+                        ? { ...item, count: item.count + 1 }
+                        : item,
+                    );
+                    props.setCart(addQuantity);
+                  }}
+                >
+                  +
+                </button>
               </div>
 
               <div>Total : {el.count * matchingItem.price}</div>
-              <button css={buttonStyles}>REMOVE</button>
+              <button
+                css={buttonStyles}
+                onClick={() => {
+                  // filter to get the remaining array after delete
+                  const remainingCart = props.cart.filter((item) => {
+                    return item.id !== el.id;
+                  });
+
+                  // setting cart with the new cookie array
+                  props.setCart(remainingCart);
+                }}
+              >
+                REMOVE
+              </button>
             </div>
           </div>
         );
       })}
-
+      AMOUNT PAYABLE :
+      {props.cart
+        .map((el) => {
+          return (
+            props.planters.find((item) => item.id === el.id).price * el.count
+          );
+        })
+        .reduce((el, sum) => el + sum, 0)}
       <Link href="/checkoutpage">
         <a>
           <button css={checkoutButtonStyles}>Proceed To Checkout</button>

@@ -97,34 +97,8 @@ export default function Plannter(props) {
 
           <button
             onClick={() => {
-              const currentCookieValue = getParsedCookie('Count');
-
-              /* Changing the state of quantity  */
               if (quantity > 0) {
-                props.setCart(
-                  props.cart.map((el) =>
-                    el.id !== props.planter.id
-                      ? el
-                      : { id: el.id, count: quantity - 1 },
-                  ),
-                );
-              }
-              if (!currentCookieValue) {
-                setStringifiedCookie('Count', [
-                  { id: props.planter.id, count: 0 },
-                ]);
-              } else {
-                const foundCookie = currentCookieValue.find(
-                  (el) => el.id === props.planter.id,
-                );
-                if (!foundCookie) {
-                  currentCookieValue.push({ id: props.planter.id, count: 0 });
-                } else {
-                  if (foundCookie.count > 0) {
-                    foundCookie.count--;
-                  }
-                }
-                setStringifiedCookie('Count', currentCookieValue);
+                setQuantity(quantity - 1);
               }
             }}
           >
@@ -186,7 +160,7 @@ export default function Plannter(props) {
 export async function getServerSideProps(context) {
   // Retrieve the planter ID or single product from the URL
   const planterId = parseInt(context.query.planterId);
-  console.log('dd', planterId);
+
   const foundPlanter = await getPlanterById(planterId);
   // Finding the platner
   /* const foundPlanter = planters.find((el) => el.id === planterId); */
