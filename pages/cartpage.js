@@ -68,6 +68,14 @@ export default function Cart(props) {
           content="Shows information of a item in your cart "
         />
       </Head>
+      AMOUNT PAYABLE :
+      {props.cart
+        .map((el) => {
+          return (
+            props.planters.find((item) => item.id === el.id).price * el.count
+          );
+        })
+        .reduce((el, sum) => el + sum, 0)}
       {props.cart.map((el) => {
         const matchingItem = props.planters.find((item) => item.id === el.id);
         return (
@@ -151,14 +159,6 @@ export default function Cart(props) {
           </div>
         );
       })}
-      AMOUNT PAYABLE :
-      {props.cart
-        .map((el) => {
-          return (
-            props.planters.find((item) => item.id === el.id).price * el.count
-          );
-        })
-        .reduce((el, sum) => el + sum, 0)}
       <Link href="/checkoutpage">
         <a>
           <button css={checkoutButtonStyles}>Proceed To Checkout</button>

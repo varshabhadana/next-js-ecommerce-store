@@ -8,7 +8,10 @@ export default function Thankyou() {
         <title>Thank you for your order</title>
         <meta name="description" content="Thank you for shopping " />
       </Head>
-      <h1>Thank you for your order!</h1>
+      <h1>
+        Your order is confirmed <br />
+        Thank you for your order!
+      </h1>
       <Link href="/planters">
         <a>
           <button>Continue Shopping</button>
