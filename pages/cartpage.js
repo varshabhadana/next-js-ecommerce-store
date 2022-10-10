@@ -3,7 +3,6 @@ import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import { getPlanter } from '../database/connect';
-import { setStringifiedCookie } from '../utils/cookie';
 
 const cartStyles = css`
   display: flex;

@@ -2,7 +2,7 @@ import { css } from '@emotion/react';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
-import { getPlanter } from '../../database/connect';
+import { getPlanter } from '../../database/planters';
 
 const productContainerStyles = css`
   display: flex;

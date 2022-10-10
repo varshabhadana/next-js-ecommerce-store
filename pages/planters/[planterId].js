@@ -3,7 +3,7 @@ import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
-import { getPlanterById } from '../../database/connect';
+import { getPlanterById } from '../../database/planters';
 import { getParsedCookie, setStringifiedCookie } from '../../utils/cookie';
 
 const producContainerStyles = css`
@@ -109,7 +109,7 @@ export default function Plannter(props) {
             css={buttonStyles}
             data-test-id="product-add-to-cart"
             onClick={() => {
-              const currentCookieValue = getParsedCookie('Count');
+              const currentCookieValue = getParsedCookie('cart');
 
               /* Changing the state of quantity  */
               props.setCart(
@@ -121,7 +121,7 @@ export default function Plannter(props) {
               );
 
               if (!currentCookieValue) {
-                setStringifiedCookie('Count', [
+                setStringifiedCookie('cart', [
                   { id: props.planter.id, count: 1 },
                 ]);
                 return;
@@ -145,7 +145,7 @@ export default function Plannter(props) {
                 } else {
                   foundCookie.count = quantity;
                 }
-                setStringifiedCookie('Count', currentCookieValue);
+                setStringifiedCookie('cart', currentCookieValue);
               }
             }}
           >

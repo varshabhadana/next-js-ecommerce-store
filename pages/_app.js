@@ -9,13 +9,13 @@ function MyApp({ Component, pageProps }) {
   const [cart, setCart] = useState([]);
 
   useEffect(() => {
-    const parsedCookies = Cookies.get('Count')
-      ? JSON.parse(Cookies.get('Count'))
+    const parsedCookies = Cookies.get('cart')
+      ? JSON.parse(Cookies.get('cart'))
       : [];
     setCart(parsedCookies);
   }, []);
   useEffect(() => {
-    setStringifiedCookie('Count', cart);
+    setStringifiedCookie('cart', cart);
   }, [cart]);
 
   return (

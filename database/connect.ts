@@ -2,33 +2,23 @@ import { config } from 'dotenv-safe';
 import postgres from 'postgres';
 
 config();
-const sql = postgres({
-  // transforming snake case to camel case
-  transform: {
-    ...postgres.camel,
-    undefined: null,
-  },
-});
-// define types
-export type Planters = {
-  id: number;
-  firstName: string;
-  material: string;
-  price: number;
-  array: [];
-};
-// function to get data from database all the planters
-export async function getPlanter() {
-  const planters = await sql<Planters[]>`
-SELECT * FROM planters;
-`;
-  return planters;
+
+// Type needed for the connection function below
+declare module globalThis {
+  let postgresSqlClient: ReturnType<typeof postgres> | undefined;
 }
-// function to get single planter by id from database
-export async function getPlanterById(id: number) {
-  // destructuring array
-  const [planter] = await sql<[Planters]>`
-  SELECT * FROM planters where id=${id};
-  `;
-  return planter;
+// Connect only once to the database
+function connectOneTimeToDatabase() {
+  if (!globalThis.postgresSqlClient) {
+    globalThis.postgresSqlClient = postgres({
+      transform: {
+        ...postgres.camel,
+        undefined: null,
+      },
+    });
+  }
+  return globalThis.postgresSqlClient;
 }
+
+// Connect to PostgreSQL
+export const sql = connectOneTimeToDatabase();
