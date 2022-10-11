@@ -16,3 +16,7 @@ export function getParsedCookie(key) {
     return undefined;
   }
 }
+
+export function deleteCookie(key) {
+  Cookies.remove(key);
+}

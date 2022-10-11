@@ -1,7 +1,7 @@
 import { css } from '@emotion/react';
 import Head from 'next/head';
 import { useState } from 'react';
-import { getPlanter } from '../database/connect';
+import { getPlanter } from '../database/planters';
 
 const totalStyles = css`
   font-size: 20px;

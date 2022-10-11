@@ -34,10 +34,14 @@ export default function Header(props) {
           </Link>
         </div>
         <div>
-          <Link href="/cartpage">Cart </Link>
+          <Link data-test-id="cart-link" href="/cartpage">
+            Cart
+          </Link>
           <br />
 
-          <span>{props.cart.reduce((acc, el) => el.count + acc, 0)}</span>
+          <span data-test-id="cart-count">
+            {props.cart.reduce((acc, el) => el.count + acc, 0)}
+          </span>
         </div>
       </nav>
     </header>

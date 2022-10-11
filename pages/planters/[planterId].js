@@ -46,7 +46,7 @@ export default function Plannter(props) {
             content="Product you are seraching for is not found "
           />
         </Head>
-        <h1>{props.error}</h1>
+        <h2>{props.error}</h2>
         Look for other item in our store here{' '}
         <Link href="/planters">Product Page</Link>
       </div>
@@ -65,6 +65,7 @@ export default function Plannter(props) {
       </Head>
       <div css={producContainerStyles}>
         <Image
+          data-test-id="product-image"
           src={`/${
             props.planter.id
           }-${props.planter.firstName.toLowerCase()}.jpeg`}
@@ -74,6 +75,7 @@ export default function Plannter(props) {
         />
         <div css={productContentStyles}>
           <h1>{props.planter.firstName}</h1>
+          <div data-test-id="product-price">{props.planter.price}</div>
           <div>Material:{props.planter.material}</div>
           <div>
             -Indoor use only
@@ -84,7 +86,10 @@ export default function Plannter(props) {
           </div>
 
           {/* Quantity value */}
-          <label htmlFor="Quantity">Quantity</label>
+          <label data-test-id="product-quantity" htmlFor="Quantity">
+            Quantity
+          </label>
+
           {quantity}
 
           <button

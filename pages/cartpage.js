@@ -2,7 +2,7 @@ import { css } from '@emotion/react';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
-import { getPlanter } from '../database/connect';
+import { getPlanter } from '../database/planters';
 
 const cartStyles = css`
   display: flex;
@@ -67,18 +67,25 @@ export default function Cart(props) {
           content="Shows information of a item in your cart "
         />
       </Head>
-      AMOUNT PAYABLE :
-      {props.cart
-        .map((el) => {
-          return (
-            props.planters.find((item) => item.id === el.id).price * el.count
-          );
-        })
-        .reduce((el, sum) => el + sum, 0)}
+      <span>AMOUNT PAYABLE :</span>
+
+      <span data-test-id="cart-total">
+        {props.cart
+          .map((el) => {
+            return (
+              props.planters.find((item) => item.id === el.id).price * el.count
+            );
+          })
+          .reduce((el, sum) => el + sum, 0)}
+      </span>
       {props.cart.map((el) => {
         const matchingItem = props.planters.find((item) => item.id === el.id);
         return (
-          <div key={el.id} css={cartStyles}>
+          <div
+            data-test-id={`cart-product-${el.id}`}
+            key={el.id}
+            css={cartStyles}
+          >
             <div css={contentStyles}>
               <div css={productStyles}>
                 <Image
@@ -122,7 +129,11 @@ export default function Cart(props) {
                   -
                 </button>
 
-                {el.count}
+                {/*   Product quantity */}
+
+                <div data-test-id={`cart-product-quantity-${el.id}`}>
+                  {el.count}
+                </div>
 
                 <button
                   style={{ marginLeft: '10px' }}
@@ -141,6 +152,7 @@ export default function Cart(props) {
 
               <div>Total : {el.count * matchingItem.price}</div>
               <button
+                data-test-id={`cart-product-remove-${el.id}`}
                 css={buttonStyles}
                 onClick={() => {
                   // filter to get the remaining array after delete
@@ -160,7 +172,9 @@ export default function Cart(props) {
       })}
       <Link href="/checkoutpage">
         <a>
-          <button css={checkoutButtonStyles}>Proceed To Checkout</button>
+          <button data-test-id="cart-checkout" css={checkoutButtonStyles}>
+            Proceed To Checkout
+          </button>
         </a>
       </Link>
     </>
