@@ -69,7 +69,7 @@ export default function Plannter(props) {
           src={`/${
             props.planter.id
           }-${props.planter.firstName.toLowerCase()}.jpeg`}
-          alt=""
+          alt={`img-${props.planter.id}-${props.planter.firstName}`}
           width="700"
           height="700"
         />
@@ -172,7 +172,7 @@ export async function getServerSideProps(context) {
     : [];
 
   const initialQuantity =
-    parsedCookies.find((el) => el.id === planterId)?.count || 0;
+    parsedCookies.find((el) => el.id === planterId)?.count || 1;
 
   if (typeof foundPlanter === 'undefined') {
     context.res.statusCode = 404;

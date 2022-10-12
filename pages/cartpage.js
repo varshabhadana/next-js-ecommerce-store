@@ -92,7 +92,7 @@ export default function Cart(props) {
                   src={`/${
                     matchingItem.id
                   }-${matchingItem.firstName.toLowerCase()}.jpeg`}
-                  alt=""
+                  alt={`img-${matchingItem.id}-${matchingItem.firstName}`}
                   width="200"
                   height="200"
                 />
