@@ -62,7 +62,11 @@ export default function Planters(props) {
       <div css={productContainerStyles}>
         {props.planters.map((el) => {
           return (
-            <div key={el.id} css={productStyles}>
+            <div
+              data-test-id={`planter-id-${el.id}`}
+              key={el.id}
+              css={productStyles}
+            >
               {/* Mapping over array to get Images */}
               <Link
                 data-test-id={`product-${el.id}`}

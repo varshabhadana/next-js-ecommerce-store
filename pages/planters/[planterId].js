@@ -86,11 +86,8 @@ export default function Plannter(props) {
           </div>
 
           {/* Quantity value */}
-          <label data-test-id="product-quantity" htmlFor="Quantity">
-            Quantity
-          </label>
-
-          {quantity}
+          <label htmlFor="Quantity">Quantity</label>
+          <div data-test-id="product-quantity">{quantity}</div>
 
           <button
             onClick={() => {
