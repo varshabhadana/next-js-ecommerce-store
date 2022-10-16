@@ -1,5 +1,7 @@
 import { getParsedCookie, setStringifiedCookie } from './cookie';
 
+// test
+
 export function updateCookie(id) {
   const currentCookieValue = getParsedCookie('cart');
 
