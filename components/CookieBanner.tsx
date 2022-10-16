@@ -2,7 +2,7 @@ import { css } from '@emotion/react';
 import { useEffect, useState } from 'react';
 import { getLocalStorage, setLocalStorage } from '../utils/localStorage';
 
-const bannerStyles = (isOpen) => css`
+const bannerStyles = (isOpen: boolean) => css`
   padding: 5px;
   height: 20px;
   transition: all 0.5s ease-in-out;
@@ -16,7 +16,7 @@ const bannerStyles = (isOpen) => css`
 `;
 
 export function CookieBanner() {
-  const [isBannerOpen, setIsBannerOpen] = useState(true);
+  const [isBannerOpen, setIsBannerOpen] = useState<boolean>(true);
   // To render cookie banner
   useEffect(() => {
     const initialValue = getLocalStorage('isBannerOpen');

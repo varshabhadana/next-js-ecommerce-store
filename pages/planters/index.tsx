@@ -2,7 +2,7 @@ import { css } from '@emotion/react';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
-import { getPlanter } from '../../database/planters';
+import { getPlanter, Planter } from '../../database/planters';
 
 const productContainerStyles = css`
   display: flex;
@@ -49,9 +49,11 @@ const buttonStyles = css`
     background-color: #bfd8bd;
   }
 `;
+type Props = {
+  planters: Planter[];
+};
 
-export default function Planters(props) {
-  console.log(props);
+export default function Planters(props: Props) {
   return (
     <>
       <Head>

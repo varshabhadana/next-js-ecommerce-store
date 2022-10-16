@@ -40,7 +40,12 @@ export default function Checkout(props) {
     expirationDate: '',
     securityCode: '',
   });
-
+  function handleChange(event) {
+    setContactInfo({
+      ...contactInfo,
+      [event.currentTarget.id]: event.currentTarget.value,
+    });
+  }
   return (
     <>
       <Head>
@@ -52,13 +57,16 @@ export default function Checkout(props) {
       </Head>
       <div css={totalStyles}>
         AMOUNT PAYABLE :
-        {props.cart
-          .map((el) => {
-            return (
-              props.planters.find((item) => item.id === el.id).price * el.count
-            );
-          })
-          .reduce((el, sum) => el + sum, 0)}
+        <span data-test-id="amount-payable">
+          {props.cart
+            .map((el) => {
+              return (
+                props.planters.find((item) => item.id === el.id).price *
+                el.count
+              );
+            })
+            .reduce((el, sum) => el + sum, 0)}
+        </span>
       </div>
       <form
         onSubmit={(event) => {
@@ -71,146 +79,105 @@ export default function Checkout(props) {
         <div css={formStyles}>
           <label htmlFor="firstName">First Name</label>
           <input
+            id="firstName"
             name="firstName"
             data-test-id="checkout-first-name"
             value={contactInfo.firstName}
-            onChange={(event) => {
-              setContactInfo({
-                ...contactInfo,
-                firstName: event.currentTarget.value,
-              });
-            }}
+            onChange={handleChange}
             required
           />
           <br />
           <label htmlFor="lastName">Last Name</label>
           <input
             name="lastName"
+            id="lastName"
             data-test-id="checkout-last-name"
             value={contactInfo.lastName}
-            onChange={(event) => {
-              setContactInfo({
-                ...contactInfo,
-                lastName: event.currentTarget.value,
-              });
-            }}
+            onChange={handleChange}
             required
           />
           <br />
           <label htmlFor="email">Email</label>
           <input
             name="email"
+            id="email"
             data-test-id="checkout-email"
             type="email"
             value={contactInfo.email}
-            onChange={(event) => {
-              setContactInfo({
-                ...contactInfo,
-                email: event.currentTarget.value,
-              });
-            }}
+            onChange={handleChange}
             required
           />
           <br />
           <label htmlFor="address">Address</label>
           <input
             name="address"
+            id="address"
             data-test-id="checkout-address"
             value={contactInfo.address}
-            onChange={(event) => {
-              setContactInfo({
-                ...contactInfo,
-                address: event.currentTarget.value,
-              });
-            }}
+            onChange={handleChange}
             required
           />
           <br />
           <label htmlFor="city">City</label>
           <input
             name="city"
+            id="city"
             data-test-id="checkout-city"
             value={contactInfo.city}
-            onChange={(event) => {
-              setContactInfo({
-                ...contactInfo,
-                city: event.currentTarget.value,
-              });
-            }}
+            onChange={handleChange}
             required
           />
           <br />
           <label htmlFor="postalCode">Postal Code</label>
           <input
             name="postalCode"
+            id="postalCode"
             data-test-id="checkout-postal-code"
             value={contactInfo.postalCode}
-            onChange={(event) => {
-              setContactInfo({
-                ...contactInfo,
-                postalCode: event.currentTarget.value,
-              });
-            }}
+            onChange={handleChange}
             required
           />
           <br />
           <label htmlFor="country">Country</label>
           <input
             name="country"
+            id="country"
             data-test-id="checkout-country"
             value={contactInfo.country}
-            onChange={(event) => {
-              setContactInfo({
-                ...contactInfo,
-                country: event.currentTarget.value,
-              });
-            }}
+            onChange={handleChange}
             required
           />
           <br />
           <label htmlFor="creditCard">Credit Card</label>
           <input
             name="creditCard"
+            id="creditCard"
             type="number"
             data-test-id="checkout-credit-card"
             value={contactInfo.creditCard}
-            onChange={(event) => {
-              setContactInfo({
-                ...contactInfo,
-                creditCard: event.currentTarget.value,
-              });
-            }}
+            onChange={handleChange}
             required
           />
           <br />
           <label htmlFor="expirationDate">Expiration Date</label>
           <input
             name="expirationDate"
-            type="date"
+            id="expirationDate"
             data-test-id="checkout-expiration-date"
             value={contactInfo.expirationDate}
-            onChange={(event) => {
-              setContactInfo({
-                ...contactInfo,
-                expirationDate: event.currentTarget.value,
-              });
-            }}
+            onChange={handleChange}
             required
           />
           <br />
           <label htmlFor="securityCode">Security Code</label>
           <input
             name="securityCode"
+            id="securityCode"
             type="password"
             maxLength="3"
             data-test-id="checkout-security-code"
             value={contactInfo.securityCode}
-            onChange={(event) => {
-              setContactInfo({
-                ...contactInfo,
-                securityCode: event.currentTarget.value,
-              });
-            }}
+            onChange={handleChange}
             required
           />
         </div>

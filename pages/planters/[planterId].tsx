@@ -1,9 +1,11 @@
 import { css } from '@emotion/react';
+import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
-import { getPlanterById } from '../../database/planters';
+import { getPlanterById, Planter } from '../../database/planters';
+import { parseIntFromContextQuery } from '../../utils/contextQuery';
 import { getParsedCookie, setStringifiedCookie } from '../../utils/cookie';
 
 const producContainerStyles = css`
@@ -30,13 +32,25 @@ const buttonStyles = css`
     background-color: #bfd8bd;
   }
 `;
+export type CartData = {
+  id: number;
+  count: number;
+};
+type Props =
+  | {
+      planter: Planter;
+      initialQuantity: number;
+      cart: CartData[];
+      setCart: any;
+    }
+  | {
+      error: string;
+    };
 
-export default function Plannter(props) {
+export default function Plannter(props: Props) {
   // Setting initial state of quantity as the initial quantity coming from the cookies of a particular product
 
-  const [quantity, setQuantity] = useState(props.initialQuantity);
-
-  if (props.error) {
+  if ('error' in props) {
     return (
       <div>
         <Head>
@@ -52,6 +66,9 @@ export default function Plannter(props) {
       </div>
     );
   }
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const [quantity, setQuantity] = useState(props.initialQuantity);
+
   return (
     <div>
       <Head>
@@ -99,7 +116,7 @@ export default function Plannter(props) {
 
           <button
             onClick={() => {
-              if (quantity > 0) {
+              if (quantity > 1) {
                 setQuantity(quantity - 1);
               }
             }}
@@ -131,7 +148,7 @@ export default function Plannter(props) {
                 /* If cookie is defined */
 
                 const foundCookie = currentCookieValue.find(
-                  (el) => el.id === props.planter.id,
+                  (el: CartData) => el.id === props.planter.id,
                 );
                 /* If cookie is not defined then have set it and push it in the array*/
 
@@ -159,9 +176,27 @@ export default function Plannter(props) {
   );
 }
 
-export async function getServerSideProps(context) {
+export async function getServerSideProps(
+  context: GetServerSidePropsContext,
+): Promise<
+  GetServerSidePropsResult<
+    | { planter: Planter; initialQuantity: number }
+    | {
+        error: string;
+      }
+  >
+> {
   // Retrieve the planter ID or single product from the URL
-  const planterId = parseInt(context.query.planterId);
+  const planterId = parseIntFromContextQuery(context.query.planterId);
+
+  if (typeof planterId === 'undefined') {
+    context.res.statusCode = 404;
+    return {
+      props: {
+        error: 'Product Not Found ',
+      },
+    };
+  }
 
   const foundPlanter = await getPlanterById(planterId);
   // Finding the platner
@@ -172,7 +207,7 @@ export async function getServerSideProps(context) {
     : [];
 
   const initialQuantity =
-    parsedCookies.find((el) => el.id === planterId)?.count || 1;
+    parsedCookies.find((el: CartData) => el.id === planterId)?.count || 1;
 
   if (typeof foundPlanter === 'undefined') {
     context.res.statusCode = 404;

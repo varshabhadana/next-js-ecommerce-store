@@ -13,7 +13,7 @@
 import { sql } from './connect';
 
 // define types
-export type Planters = {
+export type Planter = {
   id: number;
   firstName: string;
   material: string;
@@ -22,7 +22,7 @@ export type Planters = {
 };
 // function to get data from database all the planters
 export async function getPlanter() {
-  const planters = await sql<Planters[]>`
+  const planters = await sql<Planter[]>`
 SELECT * FROM planters;
 `;
   return planters;
@@ -30,7 +30,7 @@ SELECT * FROM planters;
 // function to get single planter by id from database
 export async function getPlanterById(id: number) {
   // destructuring array
-  const [planter] = await sql<Planters[]>`
+  const [planter] = await sql<Planter[]>`
   SELECT * FROM planters where id=${id};
   `;
   return planter;
