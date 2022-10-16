@@ -34,7 +34,7 @@ jobs:
         run: yarn
       - name: Install playwright
         run: yarn playwright install --with-deps
-      - run: yarn migrate up
+
       - name: Build localhost
         run: yarn build
       - name: Run tests
