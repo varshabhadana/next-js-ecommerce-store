@@ -1,4 +1,5 @@
 import { deleteCookie, getParsedCookie, setStringifiedCookie } from '../cookie';
+import { updateCookie } from '../updateCookie';
 
 test('set, gets and delete a cookie', () => {
   const cookieKey = 'diet';
@@ -14,5 +15,18 @@ test('set, gets and delete a cookie', () => {
   // Delete cookie with deleteCookie function
   expect(deleteCookie(cookieKey)).toBe(undefined);
   // Check if delete function was successful
+  expect(getParsedCookie(cookieKey)).toBe(undefined);
+});
+
+test('update cookie', () => {
+  const cookieKey = 'cart';
+  const cookieValue = [{ id: 1, count: 2 }];
+  const updatedCookieValue = [{ id: 1, count: 3 }];
+  expect(getParsedCookie(cookieKey)).toBe(undefined);
+  expect(() => setStringifiedCookie(cookieKey, cookieValue)).not.toThrow();
+  expect(getParsedCookie(cookieKey)).toStrictEqual(cookieValue);
+  expect(() => updateCookie(1)).not.toThrow();
+  expect(getParsedCookie(cookieKey)).toStrictEqual(updatedCookieValue);
+  expect(deleteCookie(cookieKey)).toBe(undefined);
   expect(getParsedCookie(cookieKey)).toBe(undefined);
 });
