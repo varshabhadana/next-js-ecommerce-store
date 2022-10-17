@@ -29,13 +29,13 @@ export default function Header(props) {
       <nav css={navStyles}>
         <div css={navLeftStyles}>
           <Link href="/">Home</Link>
-          <Link data-test-id="products-link" href="/planters">
-            Products
+          <Link href="/planters">
+            <a data-test-id="products-link">Products</a>
           </Link>
         </div>
         <div>
-          <Link data-test-id="cart-link" href="/cartpage">
-            Cart
+          <Link href="/cartpage">
+            <a data-test-id="cart-link">Cart</a>
           </Link>
           <br />
 
