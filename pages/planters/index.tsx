@@ -70,11 +70,8 @@ export default function Planters(props: Props) {
               css={productStyles}
             >
               {/* Mapping over array to get Images */}
-              <Link
-                data-test-id={`product-${el.id}`}
-                href={`/planters/${el.id}`}
-              >
-                <a>
+              <Link href={`/planters/${el.id}`}>
+                <a data-test-id={`product-${el.id}`}>
                   <Image
                     src={`/${el.id}-${el.firstName.toLowerCase()}.jpeg`}
                     alt=""
@@ -84,11 +81,8 @@ export default function Planters(props: Props) {
                 </a>
               </Link>
               {/* Mapping over array to get product name */}
-              <Link
-                data-test-id={`product-${el.id}`}
-                href={`/planters/${el.id}`}
-              >
-                <a>
+              <Link href={`/planters/${el.id}`}>
+                <a data-test-id={`product-${el.id}`}>
                   <h2>{el.firstName}</h2>
                 </a>
               </Link>
@@ -96,11 +90,9 @@ export default function Planters(props: Props) {
               <div css={contentStyles}>Material : {el.material}</div>
 
               {/* Mapping over array to get product price */}
-              <div css={contentStyles} data-test-id="product-price">
-                Price : {el.price}
-              </div>
+              <div css={contentStyles}>Price : {el.price}</div>
               <Link href={`/planters/${el.id}`}>
-                <a>
+                <a data-test-id="product-price">
                   <button css={buttonStyles}>View Product</button>
                 </a>
               </Link>
