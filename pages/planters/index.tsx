@@ -73,8 +73,8 @@ export default function Planters(props: Props) {
                 <Image
                   src={`/${el.id}-${el.firstName.toLowerCase()}.jpeg`}
                   alt={`Planter-${el.firstName}`}
-                  width="300"
-                  height="300px"
+                  width="150"
+                  height="150"
                 />
 
                 {/* Mapping over array to get product name */}
