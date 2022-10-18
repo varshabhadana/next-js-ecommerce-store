@@ -67,7 +67,7 @@ export default function Planters(props: Props) {
             <div key={el.id} css={productStyles}>
               {/* Mapping over array to get Images */}
               <Link href={`/planters/${el.id}`}>
-                <a data-test-id={`product-${el.id}`}>
+                <a data-test-id={`product-${el.id}`} key={el.id}>
                   <Image
                     src={`/${el.id}-${el.firstName.toLowerCase()}.jpeg`}
                     alt={`Planter-${el.firstName}`}
