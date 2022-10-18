@@ -144,43 +144,32 @@ export default function Plannter(props: Props) {
             css={buttonStyles}
             data-test-id="product-add-to-cart"
             onClick={() => {
-              const currentCookieValue = getParsedCookie('cart');
-
-              /* Changing the state of quantity  */
-              props.setCart(
-                props.cart.map((el) =>
-                  el.id !== props.planter.id
-                    ? el
-                    : { id: el.id, count: quantity },
-                ),
-              );
-
-              if (!currentCookieValue) {
-                setStringifiedCookie('cart', [
-                  { id: props.planter.id, count: 1 },
-                ]);
+              if (props.cart.length <= 0) {
+                props.setCart([{ id: props.planter.id, count: quantity }]);
                 return;
               } else {
                 /* If cookie is defined */
 
-                const foundCookie = currentCookieValue.find(
+                const foundCookie = props.cart.find(
                   (el: CartData) => el.id === props.planter.id,
                 );
                 /* If cookie is not defined then have set it and push it in the array*/
-
                 if (!foundCookie) {
-                  currentCookieValue.push({
-                    id: props.planter.id,
-                    count: 1,
-                  });
                   props.setCart([
                     ...props.cart,
                     { id: props.planter.id, count: quantity },
                   ]);
                 } else {
-                  foundCookie.count = quantity;
+                  console.log('here...');
+                  console.log(quantity);
+                  props.setCart(
+                    props.cart.map((el) =>
+                      el.id === foundCookie.id
+                        ? { id: el.id, count: foundCookie.count + quantity }
+                        : el,
+                    ),
+                  );
                 }
-                setStringifiedCookie('cart', currentCookieValue);
               }
             }}
           >
