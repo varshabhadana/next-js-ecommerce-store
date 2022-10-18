@@ -69,7 +69,6 @@ export default function Planters(props: Props) {
               <Link href={`/planters/${el.id}`}>
                 <a data-test-id={`product-${el.id}`}>
                   <Image
-                    data-test-id={`product-${el.id}`}
                     src={`/${el.id}-${el.firstName.toLowerCase()}.jpeg`}
                     alt=""
                     width="300"
