@@ -64,35 +64,36 @@ export default function Planters(props: Props) {
       <div css={productContainerStyles}>
         {props.planters.map((el) => {
           return (
-            <div key={`product-${el.id}`} css={productStyles}>
-              {/* Mapping over array to get Images */}
-              <Link href={`/planters/${el.id}`}>
-                <a data-test-id={`product-${el.id}`}>
-                  <Image
-                    src={`/${el.id}-${el.firstName.toLowerCase()}.jpeg`}
-                    alt={`Planter-${el.firstName}`}
-                    width="300px"
-                    height="300px"
-                  />
-                </a>
-              </Link>
-              {/* Mapping over array to get product name */}
-              <Link href={`/planters/${el.id}`}>
-                <a>
-                  <h2>{el.firstName}</h2>
-                </a>
-              </Link>
-              {/* Mapping over array to get product description */}
-              <div css={contentStyles}>Material : {el.material}</div>
+            <Link
+              key={`product-${el.id}`}
+              css={productStyles}
+              href={`/planters/${el.id}`}
+            >
+              <a data-test-id={`product-${el.id}`}>
+                <Image
+                  src={`/${el.id}-${el.firstName.toLowerCase()}.jpeg`}
+                  alt={`Planter-${el.firstName}`}
+                  width="300"
+                  height="300px"
+                />
 
-              {/* Mapping over array to get product price */}
-              <div css={contentStyles}>Price : {el.price}</div>
-              <Link href={`/planters/${el.id}`}>
-                <a data-test-id="product-price">
+                {/* Mapping over array to get product name */}
+
+                <span>
+                  <h2>{el.firstName}</h2>
+                </span>
+
+                {/* Mapping over array to get product description */}
+                <div css={contentStyles}>Material : {el.material}</div>
+
+                {/* Mapping over array to get product price */}
+                <div css={contentStyles}>Price : {el.price}</div>
+
+                <span data-test-id="product-price">
                   <button css={buttonStyles}>View Product</button>
-                </a>
-              </Link>
-            </div>
+                </span>
+              </a>
+            </Link>
           );
         })}
       </div>
