@@ -32,6 +32,14 @@ const buttonStyles = css`
     background-color: #bfd8bd;
   }
 `;
+const inputStyles = css`
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+`;
+
 export type CartData = {
   id: number;
   count: number;
@@ -104,7 +112,15 @@ export default function Plannter(props: Props) {
 
           {/* Quantity value */}
           <label htmlFor="Quantity">Quantity</label>
-          <div data-test-id="product-quantity">{quantity}</div>
+          <div css={inputStyles}>
+            <input
+              data-test-id="product-quantity"
+              type="number"
+              min="1"
+              value={quantity}
+              onChange={(event) => setQuantity(event.target.valueAsNumber)}
+            />
+          </div>
 
           <button
             onClick={() => {
