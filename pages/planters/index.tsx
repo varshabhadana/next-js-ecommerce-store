@@ -70,7 +70,7 @@ export default function Planters(props: Props) {
                 <a data-test-id={`product-${el.id}`}>
                   <Image
                     src={`/${el.id}-${el.firstName.toLowerCase()}.jpeg`}
-                    alt="plantes page"
+                    alt={`Planter-${el.firstName}`}
                     width="150px"
                     height="150px"
                   />
