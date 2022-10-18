@@ -71,8 +71,8 @@ export default function Planters(props: Props) {
                   <Image
                     src={`/${el.id}-${el.firstName.toLowerCase()}.jpeg`}
                     alt=""
-                    width="300"
-                    height="300"
+                    width="150"
+                    height="150"
                   />
                 </a>
               </Link>
