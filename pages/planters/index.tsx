@@ -64,8 +64,12 @@ export default function Planters(props: Props) {
       <div css={productContainerStyles}>
         {props.planters.map((el) => {
           return (
-            <Link key={el.id} css={productStyles} href={`/planters/${el.id}`}>
-              <a data-test-id={`product-${el.id}`} key={el.id}>
+            <Link
+              key={`product-${el.id}`}
+              css={productStyles}
+              href={`/planters/${el.id}`}
+            >
+              <a data-test-id={`product-${el.id}`}>
                 <Image
                   src={`/${el.id}-${el.firstName.toLowerCase()}.jpeg`}
                   alt={`Planter-${el.firstName}`}
