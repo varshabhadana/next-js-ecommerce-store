@@ -72,7 +72,18 @@ export default function Checkout(props) {
         onSubmit={(event) => {
           event.preventDefault();
           window.location.href = '/thankyou';
-          setContactInfo('');
+          setContactInfo({
+            firstName: '',
+            lastName: '',
+            email: '',
+            address: '',
+            city: '',
+            postalCode: '',
+            country: '',
+            creditCard: '',
+            expirationDate: '',
+            securityCode: '',
+          });
           props.setCart([]);
         }}
       >
@@ -181,7 +192,11 @@ export default function Checkout(props) {
             required
           />
         </div>
-        <button data-test-id="checkout-confirm-order" css={buttonStyles}>
+        <button
+          type="submit"
+          data-test-id="checkout-confirm-order"
+          css={buttonStyles}
+        >
           Confirm Order
         </button>
       </form>
