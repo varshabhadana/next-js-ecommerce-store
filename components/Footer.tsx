@@ -1,3 +1,10 @@
+import { css } from '@emotion/react';
+
+const footerStyles = css`
+  text-align: center;
+  border: 1px solid transparent;
+`;
+
 export default function Footer() {
-  return <footer>copyright@2022</footer>;
+  return <footer css={footerStyles}>copyright@LunaStudio</footer>;
 }

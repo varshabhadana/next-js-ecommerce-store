@@ -4,24 +4,52 @@ import { useState } from 'react';
 import { getPlanter } from '../database/planters';
 
 const totalStyles = css`
-  font-size: 20px;
+  font-size: 28px;
   font-weight: bold;
+`;
+const mainContainerStyles = css`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+`;
+
+const formContainerStyles = css`
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-size: 24px;
+  border-radius: 4px;
+  width: 700px;
+  border-radius: 5px;
+  background-color: #f2f2f2;
 `;
 const formStyles = css`
   display: flex;
   flex-direction: column;
-  justify-content: center;
   margin: 50px;
-
-  width: 700px;
+  width: 100%;
+  padding: 30px;
+`;
+const inputStyles = css`
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
 `;
 const buttonStyles = css`
   padding: 10px;
-  background-color: white;
+  background-color: #bfd8bd;
   color: black;
   border: 2px solid #e7e7e7;
   font-size: 16px;
-  margin-top: 30px;
+  width: 80%;
+  margin-bottom: 30px;
 
   &:hover {
     background-color: #bfd8bd;
@@ -47,7 +75,7 @@ export default function Checkout(props) {
     });
   }
   return (
-    <>
+    <div css={mainContainerStyles}>
       <Head>
         <title>Checkout Page</title>
         <meta
@@ -69,6 +97,7 @@ export default function Checkout(props) {
         </span>
       </div>
       <form
+        css={formContainerStyles}
         onSubmit={(event) => {
           event.preventDefault();
           window.location.href = '/thankyou';
@@ -90,6 +119,7 @@ export default function Checkout(props) {
         <div css={formStyles}>
           <label htmlFor="firstName">First Name</label>
           <input
+            css={inputStyles}
             id="firstName"
             name="firstName"
             data-test-id="checkout-first-name"
@@ -100,6 +130,7 @@ export default function Checkout(props) {
           <br />
           <label htmlFor="lastName">Last Name</label>
           <input
+            css={inputStyles}
             name="lastName"
             id="lastName"
             data-test-id="checkout-last-name"
@@ -110,6 +141,7 @@ export default function Checkout(props) {
           <br />
           <label htmlFor="email">Email</label>
           <input
+            css={inputStyles}
             name="email"
             id="email"
             data-test-id="checkout-email"
@@ -121,6 +153,7 @@ export default function Checkout(props) {
           <br />
           <label htmlFor="address">Address</label>
           <input
+            css={inputStyles}
             name="address"
             id="address"
             data-test-id="checkout-address"
@@ -131,6 +164,7 @@ export default function Checkout(props) {
           <br />
           <label htmlFor="city">City</label>
           <input
+            css={inputStyles}
             name="city"
             id="city"
             data-test-id="checkout-city"
@@ -141,6 +175,7 @@ export default function Checkout(props) {
           <br />
           <label htmlFor="postalCode">Postal Code</label>
           <input
+            css={inputStyles}
             name="postalCode"
             id="postalCode"
             data-test-id="checkout-postal-code"
@@ -151,6 +186,7 @@ export default function Checkout(props) {
           <br />
           <label htmlFor="country">Country</label>
           <input
+            css={inputStyles}
             name="country"
             id="country"
             data-test-id="checkout-country"
@@ -161,6 +197,7 @@ export default function Checkout(props) {
           <br />
           <label htmlFor="creditCard">Credit Card</label>
           <input
+            css={inputStyles}
             name="creditCard"
             id="creditCard"
             type="number"
@@ -172,6 +209,7 @@ export default function Checkout(props) {
           <br />
           <label htmlFor="expirationDate">Expiration Date</label>
           <input
+            css={inputStyles}
             name="expirationDate"
             id="expirationDate"
             data-test-id="checkout-expiration-date"
@@ -182,6 +220,7 @@ export default function Checkout(props) {
           <br />
           <label htmlFor="securityCode">Security Code</label>
           <input
+            css={inputStyles}
             name="securityCode"
             id="securityCode"
             type="password"
@@ -200,7 +239,7 @@ export default function Checkout(props) {
           Confirm Order
         </button>
       </form>
-    </>
+    </div>
   );
 }
 

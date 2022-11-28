@@ -10,16 +10,24 @@ import { getParsedCookie, setStringifiedCookie } from '../../utils/cookie';
 
 const producContainerStyles = css`
   display: flex;
-  padding: 20px;
+  padding: 12px;
+  width: 1200px;
+  height: 700px;
   margin: 50px 100px;
-  border: 1px solid #77bfa3;
+  border: 2px solid #77bfa3;
   border-radius: 8px;
 `;
 const productContentStyles = css`
   display: flex;
   flex-direction: column;
   justify-content: center;
+
   padding: 30px;
+  gap: 10px;
+`;
+const quantityContainerStyles = css`
+  display: flex;
+  justify-content: space-between;
 `;
 const buttonStyles = css`
   padding: 10px;
@@ -74,7 +82,7 @@ export default function Plannter(props: Props) {
       </div>
     );
   }
-  // eslint-disable-next-line react-hooks/rules-of-hooks
+
   const [quantity, setQuantity] = useState(props.initialQuantity);
 
   return (
@@ -96,7 +104,7 @@ export default function Plannter(props: Props) {
           }-${props.planter.firstName.toLowerCase()}.jpeg`}
           alt={`img-${props.planter.id}-${props.planter.firstName}`}
           width="700"
-          height="700"
+          height="600"
         />
         <div css={productContentStyles}>
           <h1>{props.planter.firstName}</h1>
@@ -112,33 +120,36 @@ export default function Plannter(props: Props) {
 
           {/* Quantity value */}
           <label htmlFor="Quantity">Quantity</label>
-          <div css={inputStyles}>
-            <input
-              data-test-id="product-quantity"
-              type="number"
-              min="1"
-              value={quantity}
-              onChange={(event) => setQuantity(event.target.valueAsNumber)}
-            />
+          <div css={quantityContainerStyles}>
+            <div css={inputStyles}>
+              <input
+                data-test-id="product-quantity"
+                type="number"
+                min="1"
+                value={quantity}
+                onChange={(event) => setQuantity(event.target.valueAsNumber)}
+              />
+            </div>
+            <div>
+              {' '}
+              <button
+                onClick={() => {
+                  setQuantity(quantity + 1);
+                }}
+              >
+                +
+              </button>
+              <button
+                onClick={() => {
+                  if (quantity > 1) {
+                    setQuantity(quantity - 1);
+                  }
+                }}
+              >
+                -
+              </button>
+            </div>
           </div>
-
-          <button
-            onClick={() => {
-              setQuantity(quantity + 1);
-            }}
-          >
-            +
-          </button>
-
-          <button
-            onClick={() => {
-              if (quantity > 1) {
-                setQuantity(quantity - 1);
-              }
-            }}
-          >
-            -
-          </button>
 
           <button
             css={buttonStyles}

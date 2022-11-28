@@ -51,8 +51,15 @@ const checkoutButtonStyles = css`
   color: black;
   border: 2px solid #e7e7e7;
   font-size: 16px;
-  width: 100%;
+  width: 90%;
   margin: 50px;
+`;
+const quantityStyles = css`
+  display: flex;
+  flex-direction: row;
+`;
+const amountPayableStyles = css`
+  margin-left: 10px;
 `;
 
 export default function Cart(props) {
@@ -67,7 +74,7 @@ export default function Cart(props) {
           content="Shows information of a item in your cart "
         />
       </Head>
-      <span>AMOUNT PAYABLE :</span>
+      <span css={amountPayableStyles}>AMOUNT PAYABLE :</span>
 
       <span data-test-id="cart-total">
         {props.cart
@@ -102,7 +109,7 @@ export default function Cart(props) {
                 </div>
               </div>
 
-              <div>
+              <div css={quantityStyles}>
                 <button
                   style={{ marginRight: '10px' }}
                   onClick={() => {

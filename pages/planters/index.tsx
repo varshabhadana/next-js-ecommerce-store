@@ -6,38 +6,36 @@ import { getPlanter, Planter } from '../../database/planters';
 
 const productContainerStyles = css`
   display: flex;
+  justify-content: center;
+  align-items: center;
   flex-wrap: wrap;
   width: 100%;
-
   padding: 20px;
   margin: 10px;
-  column-gap: 20px;
-  row-gap: 20px;
+  column-gap: 40px;
+  row-gap: 50px;
+  a {
+    color: black;
+
+    text-decoration: none;
+  }
 `;
 const productStyles = css`
   display: flex;
-
   justify-content: center;
   flex-direction: column;
   padding: 24px;
-  box-shadow: 0 0px 0px 0 gray;
   transition: 0.3s;
-
   &:hover {
-    box-shadow: 0 8px 16px 0 #bfd8bd;
+    box-shadow: 0 8px 16px 8px #bfd8bd;
+    background-color: 'red';
   }
 `;
 const contentStyles = css`
   font-size: 15px;
   margin-bottom: 5px;
 `;
-const headingStyles = css`
-  font-size: 40px;
 
-  padding: 10px;
-  margin: 20px;
-  text-align: left;
-`;
 const buttonStyles = css`
   padding: 10px;
   background-color: white;
@@ -60,40 +58,38 @@ export default function Planters(props: Props) {
         <title>Planter Product Page</title>
         <meta name="description" content="Shows all the listed planters " />
       </Head>
-      <h1 css={headingStyles}>Plant Pots</h1>
+
       <div css={productContainerStyles}>
         {props.planters.map((el) => {
           return (
-            <Link
-              key={`product-${el.id}`}
-              css={productStyles}
-              href={`/planters/${el.id}`}
-            >
-              <a data-test-id={`product-${el.id}`}>
-                <Image
-                  src={`/${el.id}-${el.firstName.toLowerCase()}.jpeg`}
-                  alt={`Planter-${el.firstName}`}
-                  width="150"
-                  height="150"
-                />
+            <div key={`product-${el.id}`} css={productStyles}>
+              <Link href={`/planters/${el.id}`}>
+                <a data-test-id={`product-${el.id}`}>
+                  <Image
+                    src={`/${el.id}-${el.firstName.toLowerCase()}.jpeg`}
+                    alt={`Planter-${el.firstName}`}
+                    width="400"
+                    height="400"
+                  />
 
-                {/* Mapping over array to get product name */}
+                  {/* Mapping over array to get product name */}
 
-                <span>
-                  <h2>{el.firstName}</h2>
-                </span>
+                  <span>
+                    <h2>{el.firstName}</h2>
+                  </span>
 
-                {/* Mapping over array to get product description */}
-                <div css={contentStyles}>Material : {el.material}</div>
+                  {/* Mapping over array to get product description */}
+                  <div css={contentStyles}>Material : {el.material}</div>
 
-                {/* Mapping over array to get product price */}
-                <div css={contentStyles}>Price : {el.price}</div>
+                  {/* Mapping over array to get product price */}
+                  <div css={contentStyles}>Price : {el.price}</div>
 
-                <span data-test-id="product-price">
-                  <button css={buttonStyles}>View Product</button>
-                </span>
-              </a>
-            </Link>
+                  <span data-test-id="product-price">
+                    <button css={buttonStyles}>View Product</button>
+                  </span>
+                </a>
+              </Link>
+            </div>
           );
         })}
       </div>
