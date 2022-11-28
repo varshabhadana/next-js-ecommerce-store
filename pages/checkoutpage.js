@@ -231,11 +231,7 @@ export default function Checkout(props) {
             required
           />
         </div>
-        <button
-          type="submit"
-          data-test-id="checkout-confirm-order"
-          css={buttonStyles}
-        >
+        <button data-test-id="checkout-confirm-order" css={buttonStyles}>
           Confirm Order
         </button>
       </form>

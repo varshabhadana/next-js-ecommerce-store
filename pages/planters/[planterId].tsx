@@ -6,7 +6,6 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { getPlanterById, Planter } from '../../database/planters';
 import { parseIntFromContextQuery } from '../../utils/contextQuery';
-import { getParsedCookie, setStringifiedCookie } from '../../utils/cookie';
 
 const producContainerStyles = css`
   display: flex;
